@@ -6,66 +6,104 @@
   <title>Bombay Calling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&family=Corinthia:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --pad: clamp(12px, 4vw, 56px);
+      --pad: clamp(16px, 5vw, 72px);
       --bg: #f3e4d6;
-      --maroon: #3d0c1f;
+      --maroon: #2c1810;
       --amber: #b8722a;
       --cream: #faf5f0;
     }
 
-    html, body {
-      margin: 0;
-      background: var(--bg);
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; background: var(--bg); }
+
+    /* noise texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
+    /* page wrapper */
     .screen {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: var(--pad) var(--pad) clamp(40px, 8vw, 80px);
-      box-sizing: border-box;
+      padding: clamp(32px, 3vw, 40px) var(--pad) clamp(56px, 9vw, 100px);
       background: var(--bg);
     }
 
-    .logo {
+    /* ── HERO ── */
+    .hero {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: clamp(8px, 2vw, 18px);
-      opacity: 0;
-      transform: translateY(10px) scale(0.99);
-      animation: intro 900ms ease-out forwards;
+      gap: clamp(14px, 2.5vh, 24px);
+      animation: heroIn 1s ease-out both;
     }
 
-    .logo-icon {
-      height: clamp(52px, 13vw, 140px);
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-icon {
+      height: clamp(80px, 10vw, 120px);
       width: auto;
       display: block;
-      flex-shrink: 0;
     }
 
-    .logo-text {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(30px, 8vw, 116px);
-      color: #4e1e2d;
+    .hero-title {
+      font-family: 'Corinthia', cursive;
+      font-style: normal;
+      font-weight: 700;
+      font-size: clamp(72px, 12vw, 110px);
+      color: var(--maroon);
+      text-align: center;
       line-height: 1;
-      letter-spacing: 0.01em;
-      margin-top: clamp(4px, 2vw, 24px);
-      white-space: nowrap;
+      letter-spacing: -0.04em;
+      word-spacing: 0.18em;
+      margin: 0;
     }
 
-    @keyframes intro {
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    /* ── ORNAMENTAL DIVIDER ── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: clamp(180px, 38vw, 360px);
+      margin: clamp(28px, 4.5vh, 52px) auto;
+    }
+    .orn-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(44,24,16,0.38);
+    }
+    .orn-diamond {
+      width: 7px;
+      height: 7px;
+      min-width: 7px;
+      background: #2c1810;
+      transform: rotate(45deg);
+      opacity: 0.75;
+    }
+    .orn-diamond.sm {
+      width: 4px;
+      height: 4px;
+      min-width: 4px;
+      opacity: 0.38;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .logo { animation: none; opacity: 1; transform: none; }
-    }
-
-    /* info wrap */
+    /* ── INFO WRAP ── */
     .info-wrap {
       width: 100%;
       display: flex;
@@ -73,70 +111,49 @@
       align-items: center;
     }
 
-    /* trailer line */
-    .trailer-announce {
-      margin-top: clamp(8px, 1.5vh, 14px);
-      text-align: center;
-      opacity: 0;
-      animation: rise 700ms 1000ms ease-out forwards;
-    }
-
-    .trailer-announce p {
-      font-family: 'Jost', sans-serif;
-      font-weight: 500;
-      font-size: clamp(14px, 3.2vw, 19px);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--maroon);
-    }
-
-    /* divider rule */
-    .rule {
-      width: clamp(160px, 35vw, 320px);
-      height: 1px;
-      background: rgba(61,12,31,0.25);
-      margin-top: clamp(16px, 3vh, 28px);
-      opacity: 0;
-      animation: rise 700ms 1100ms ease-out forwards;
-    }
-
-    /* info cards */
+    /* ── CARDS ── */
     .cards {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-top: clamp(16px, 3vh, 26px);
-      opacity: 0;
-      animation: rise 700ms 1200ms ease-out forwards;
+      gap: 12px;
+      width: 100%;
     }
 
     .card {
-      background: rgba(250,245,240,0.55);
-      border: 1px solid rgba(61,12,31,0.1);
-      border-radius: 14px;
-      padding: 18px 26px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(44,24,16,0.08);
+      border-radius: 16px;
+      padding: 20px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      min-width: 150px;
-      backdrop-filter: blur(6px);
+      min-width: 155px;
+      box-shadow: 0 2px 18px rgba(44,24,16,0.06), 0 1px 4px rgba(44,24,16,0.03);
+      backdrop-filter: blur(8px);
+      transition: transform 200ms ease, box-shadow 200ms ease;
     }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(44,24,16,0.1), 0 2px 8px rgba(44,24,16,0.06);
+    }
+    a.card { text-decoration: none; cursor: pointer; }
 
     .card-label {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 13px;
-      letter-spacing: 0.2em;
+      font-size: 10px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--maroon);
+      opacity: 0.65;
     }
 
     .card-value {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(18px, 3.6vw, 24px);
-      font-weight: 500;
+      font-weight: 400;
       color: var(--maroon);
       text-align: center;
       line-height: 1.3;
@@ -145,166 +162,454 @@
     .card-sub {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--maroon);
       opacity: 0.5;
       text-align: center;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
 
-    /* buttons */
+    /* ── BUTTONS ── */
     .btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      margin-top: clamp(20px, 3.5vh, 36px);
+      width: 100%;
+    }
+
+    .btn-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       gap: 10px;
-      margin-top: clamp(16px, 3vh, 26px);
-      opacity: 0;
-      animation: rise 700ms 1350ms ease-out forwards;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-row-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.6vw, 21px);
+      font-weight: 400;
+      color: var(--maroon);
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+      text-align: center;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
-      padding: 10px 20px;
+      padding: 11px 22px;
       border-radius: 100px;
       font-family: 'Jost', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: transform 160ms ease, box-shadow 160ms ease;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
       cursor: pointer;
     }
-
     .btn:hover { transform: translateY(-2px); }
 
     .btn-maps {
       background: var(--maroon);
       color: var(--cream);
-      box-shadow: 0 3px 14px rgba(61,12,31,0.22);
+      border: none;
+      box-shadow: 0 3px 14px rgba(44,24,16,0.22);
     }
-    .btn-maps:hover { box-shadow: 0 6px 20px rgba(61,12,31,0.28); background: #5a1230; }
+    .btn-maps:hover { box-shadow: 0 6px 22px rgba(44,24,16,0.3); background: #3d2318; }
 
     .btn-ghost {
       color: var(--maroon);
-      border: 1.5px solid rgba(61,12,31,0.28);
+      border: 1.5px solid rgba(44,24,16,0.25);
       background: transparent;
     }
-    .btn-ghost:hover { border-color: var(--maroon); background: rgba(61,12,31,0.04); }
+    .btn-ghost:hover { border-color: rgba(44,24,16,0.6); background: rgba(44,24,16,0.04); }
 
-    /* footer */
-    .site-footer {
-      margin-top: clamp(24px, 4vh, 40px);
+    /* ── MENU SECTION ── */
+    .menu-section {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .menu-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: normal;
+      font-size: clamp(44px, 7vw, 68px);
+      font-weight: 400;
+      color: var(--maroon);
+      text-align: center;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin: 0 0 clamp(32px, 5vh, 56px);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 clamp(40px, 7vw, 80px);
+    }
+
+    .menu-col { display: flex; flex-direction: column; }
+
+    .menu-category {
+      display: flex;
+      flex-direction: column;
+      margin-top: clamp(28px, 4vh, 40px);
+      padding-top: clamp(20px, 3vh, 28px);
+      border-top: 1px solid rgba(44,24,16,0.2);
+    }
+    .menu-col > .menu-category:first-child { margin-top: 0; }
+
+    .menu-cat-title {
       font-family: 'Jost', sans-serif;
-      font-size: 12px;
+      font-size: clamp(17px, 2.6vw, 24px);
       font-weight: 300;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--maroon);
+      margin: 0 0 clamp(14px, 2.2vh, 22px);
+      text-align: center;
+      justify-content: center;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: clamp(14px, 2vh, 20px) 0;
+      border-bottom: 1px solid rgba(44,24,16,0.06);
+    }
+    .menu-item:last-child { border-bottom: none; }
+
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.6vw, 23px);
+      font-weight: 400;
+      color: var(--maroon);
+      line-height: 1.2;
+    }
+
+    .menu-item-price { display: none; }
+
+    .menu-item-desc {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(13px, 1.7vw, 15px);
+      font-weight: 300;
+      color: var(--maroon);
+      opacity: 0.65;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── FADE-UP (Intersection Observer) ── */
+    .fade-up {
       opacity: 0;
-      animation: riseFade 700ms 1500ms ease-out forwards;
+      transform: translateY(22px);
+      transition: opacity 750ms ease, transform 750ms ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
     }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes riseFade {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 0.35; transform: translateY(0); }
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--maroon);
+      width: 100%;
+      padding: clamp(28px, 5vh, 48px) var(--pad);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .trailer-announce, .rule, .cards, .btns, .site-footer {
-        animation: none !important; opacity: 1 !important; transform: none !important;
-      }
+    .footer-copy {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250,245,240,0.55);
+      margin: 0;
+      text-align: center;
+    }
+
+    .footer-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(250,245,240,0.18);
+      color: rgba(250,245,240,0.55);
+      transition: border-color 160ms ease, color 160ms ease;
+      text-decoration: none;
+    }
+    .footer-icon:hover { border-color: rgba(250,245,240,0.6); color: var(--cream); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .cards { flex-direction: column; align-items: stretch; }
+      .card  { padding: 16px 18px; min-width: unset; }
+      .menu-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
-      .cards { gap: 8px; }
-      .card  { padding: 12px 14px; min-width: 115px; }
+      .btns { width: 100%; }
+      .btn-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+      }
+      .btn-row .btn {
+        flex: 1 1 0;
+        font-size: 10px;
+        padding: 9px 10px;
+        white-space: nowrap;
+      }
+      .btn-group { width: 100%; }
+      .btn-row-label { width: 100%; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero  { animation: none; opacity: 1; transform: none; }
+      .fade-up { transition: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+
   <div class="screen">
 
-    <div class="logo">
-      <img src="icon.png" alt="" class="logo-icon" />
-      <span class="logo-text">Bombay Calling</span>
-    </div>
+    <!-- HERO -->
+    <header class="hero">
+      <img src="icon.png" alt="" class="hero-icon" />
+      <h1 class="hero-title">Bombay Calling</h1>
+    </header>
 
     <div class="info-wrap">
 
-      <div class="trailer-announce">
-        <p>Mumbai street food. Our very own food truck. Finally here </p>
+      <!-- DIVIDER -->
+      <div class="ornament fade-up">
+        <div class="orn-line"></div>
+        <div class="orn-diamond sm"></div>
+        <div class="orn-diamond"></div>
+        <div class="orn-diamond sm"></div>
+        <div class="orn-line"></div>
       </div>
 
-      <div class="rule"></div>
-
-      <div class="cards">
-        <div class="card">
-          <span class="card-label">Opening</span>
-          <span class="card-value">5th June 2026</span>
-        </div>
+      <!-- CARDS -->
+      <div class="cards fade-up">
         <div class="card">
           <span class="card-label">Hours</span>
-          <span class="card-value">5:00 – 10:00 PM</span>
-          <span class="card-sub">Monday to Sunday</span>
+          <span class="card-value">6:00 – 11:00 PM</span>
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Mon–Tue &amp; Thu–Sun</span>
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Closed Wednesday</span>
         </div>
-        <div class="card">
+        <a class="card" href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6" target="_blank" rel="noopener">
           <span class="card-label">Find Us</span>
           <span class="card-value">231 Prospect Hwy<br>Seven Hills, NSW</span>
-          <span class="card-sub">Opposite Seven Hills Plaza</span>
-        </div>
-        <div class="card">
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Opposite Seven Hills Plaza</span>
+        </a>
+        <a class="card" href="#menu">
           <span class="card-label">Menu</span>
           <span class="card-value">100% Vegetarian</span>
-          <span class="card-sub">Mumbai street food</span>
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Mumbai street food</span>
+        </a>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="btns fade-up">
+
+        <!-- Row 1: order + directions -->
+        <div class="btn-row">
+          <a class="btn btn-maps" href="https://www.doordash.com/store/bombay-calling-seven-hills-46215272/111069347/" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Order on DoorDash
+          </a>
+          <a class="btn btn-maps" href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-5.686-8-12a8 8 0 1 1 16 0c0 6.314-8 12-8 12z"/><circle cx="12" cy="10" r="3"/></svg>
+            Get Directions
+          </a>
         </div>
+
+        <!-- Row 2: pickup -->
+        <div class="btn-group">
+          <span class="btn-row-label">Prefer to order for pickup? Call or message us</span>
+          <div class="btn-row">
+            <a class="btn btn-ghost" href="https://wa.me/61493966072" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              WhatsApp Us
+            </a>
+            <a class="btn btn-ghost" href="tel:0493966072">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+              Call Us
+            </a>
+          </div>
+        </div>
+
+        <!-- Row 3: socials -->
+        <div class="btn-group">
+          <span class="btn-row-label">Follow us on socials</span>
+          <div class="btn-row">
+            <a class="btn btn-ghost" href="https://www.instagram.com/bombay_calling" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              @bombay_calling
+            </a>
+            <a class="btn btn-ghost" href="https://www.facebook.com/bombay.calling/" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              Facebook
+            </a>
+          </div>
+        </div>
+
       </div>
 
-      <div class="btns">
-        <a class="btn btn-maps"
-           href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6"
-           target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s-8-5.686-8-12a8 8 0 1 1 16 0c0 6.314-8 12-8 12z"/><circle cx="12" cy="10" r="3"/>
-          </svg>
-          Get Directions
-        </a>
-        <a class="btn btn-ghost"
-           href="https://www.instagram.com/bombay_calling"
-           target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
-          @bombay_calling
-        </a>
-        <a class="btn btn-ghost"
-           href="https://wa.me/61493966072"
-           target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-          </svg>
-          WhatsApp Us
-        </a>
-        <a class="btn btn-ghost"
-           href="tel:0493966072">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/>
-          </svg>
-          Call Us
-        </a>
+      <!-- MENU DIVIDER -->
+      <div class="ornament fade-up" style="margin-top: clamp(52px, 9vh, 88px); margin-bottom: 0;">
+        <div class="orn-line"></div>
+        <div class="orn-diamond sm"></div>
+        <div class="orn-diamond"></div>
+        <div class="orn-diamond sm"></div>
+        <div class="orn-line"></div>
       </div>
 
-      <p class="site-footer">© 2026 Pooja's Kitchen &nbsp;·&nbsp; Seven Hills, Sydney</p>
+      <!-- MENU -->
+      <section class="menu-section fade-up" id="menu" style="margin-top: clamp(32px, 5vh, 56px);">
+        <h2 class="menu-heading">Menu</h2>
+
+        <div class="menu-grid">
+
+          <!-- Left: Vada Pav + Pav Bhaji -->
+          <div class="menu-col">
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Vada Pav</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">The Bombay</span>
+                <p class="menu-item-desc">A golden fried potato patty tucked in a soft pav, layered with chutneys and a kick of spice.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">The Cheesy Bombay</span>
+                <p class="menu-item-desc">All the classics, elevated with a generous melt of cheese over the vada.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Butter Mar Ke</span>
+                <p class="menu-item-desc">Soft pav toasted in rich butter, cradling a crispy spiced vada and fresh chutneys.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Loaded Bombay</span>
+                <p class="menu-item-desc">Buttery toasted pav, golden vada, melted cheese, the ultimate indulgence.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Pav Bhaji</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">Bombay Mash</span>
+                <p class="menu-item-desc">A thick, spiced vegetable mash served piping hot with soft buttered pavs.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Cheesy Bombay Mash</span>
+                <p class="menu-item-desc">Our classic pav bhaji crowned with a generous layer of melted cheese.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Dabeli + Chaat Corner + For the Little Ones + Drinks -->
+          <div class="menu-col">
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Dabeli</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">The Bombay Slider</span>
+                <p class="menu-item-desc">A sweet and spicy Mumbai street classic, stuffed with spiced potato filling, pomegranate, and chutneys in a soft pav.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Bombay Melt</span>
+                <p class="menu-item-desc">All the bold flavours of our classic dabeli, crowned with a generous layer of melted cheese.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Chaat Corner</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">Flavour Bombs</span>
+                <p class="menu-item-desc">Crispy hollow puris filled with spiced potato and chickpeas, dunked in tangy tamarind and mint water, one burst at a time.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">For the Little Ones</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">Cheesy Pav</span>
+                <p class="menu-item-desc">Warm buttered pav with melted cheese.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Yummy Fries</span>
+                <p class="menu-item-desc">Crispy golden fries with seasoning.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Drinks</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">Mummy's Chai</span>
+                <p class="menu-item-desc">A warming blend of bold tea, fresh ginger, and aromatic spices, brewed the desi way.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
 
     </div>
-
   </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p class="footer-copy">© 2026 Bombay Calling &nbsp;·&nbsp; Seven Hills, Sydney</p>
+    <div class="footer-icons">
+      <a href="https://www.instagram.com/bombay_calling" target="_blank" rel="noopener" class="footer-icon" aria-label="Instagram">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://wa.me/61493966072" target="_blank" rel="noopener" class="footer-icon" aria-label="WhatsApp">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+
 </body>
 </html>
