@@ -318,6 +318,60 @@
       margin: 0;
     }
 
+    /* ── WEEKEND SPECIALS DROPDOWN ── */
+    .specials-dropdown {
+      width: 100%;
+      border-top: 1px solid rgba(44,24,16,0.2);
+      border-bottom: 1px solid rgba(44,24,16,0.2);
+      margin-bottom: clamp(28px, 4vh, 44px);
+    }
+
+    .specials-dropdown summary {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(17px, 2.6vw, 24px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--maroon);
+      text-align: center;
+      padding: clamp(14px, 2.2vh, 20px) 0;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      user-select: none;
+    }
+    .specials-dropdown summary::-webkit-details-marker { display: none; }
+    .specials-dropdown summary::after {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid var(--maroon);
+      border-bottom: 1.5px solid var(--maroon);
+      transform: rotate(45deg);
+      opacity: 0.5;
+      transition: transform 250ms ease;
+      margin-top: -3px;
+    }
+    .specials-dropdown[open] summary::after {
+      transform: rotate(-135deg);
+      margin-top: 3px;
+    }
+
+    .specials-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 clamp(40px, 7vw, 80px);
+      padding-bottom: clamp(14px, 2vh, 20px);
+    }
+
+    @media (max-width: 640px) {
+      .specials-items { grid-template-columns: 1fr; }
+    }
+
     /* ── FADE-UP (Intersection Observer) ── */
     .fade-up {
       opacity: 0;
@@ -503,6 +557,20 @@
       <!-- MENU -->
       <section class="menu-section fade-up" id="menu" style="margin-top: clamp(32px, 5vh, 56px);">
         <h2 class="menu-heading">Menu</h2>
+
+        <details class="specials-dropdown">
+          <summary>Weekend Specials</summary>
+          <div class="specials-items">
+            <div class="menu-item">
+              <span class="menu-item-name">Chole Bhature</span>
+              <p class="menu-item-desc">2 fluffy, golden bhature served with spicy chole, pickle, onions and green chutney.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Chole</span>
+              <p class="menu-item-desc">Tender chickpeas slow-cooked in a rich, spiced masala gravy (500ml box).</p>
+            </div>
+          </div>
+        </details>
 
         <div class="menu-grid">
 
