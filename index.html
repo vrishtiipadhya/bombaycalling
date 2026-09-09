@@ -133,6 +133,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       min-width: 155px;
       box-shadow: 0 2px 18px rgba(44,24,16,0.06), 0 1px 4px rgba(44,24,16,0.03);
@@ -482,9 +483,12 @@
       <div class="cards fade-up">
         <div class="card">
           <span class="card-label">Hours</span>
-          <span class="card-value">5:30 – 10:30 PM</span>
+          <span class="card-label" style="margin-top:4px;font-size:13px;font-weight:500;opacity:1;">Brunch</span>
+          <span class="card-value">10:00AM – 1:00PM</span>
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Sat &amp; Sun</span>
+          <span class="card-label" style="margin-top:10px;font-size:13px;font-weight:500;opacity:1;">Dinner</span>
+          <span class="card-value">5:30PM – 10:30PM</span>
           <span class="card-sub" style="font-weight:500;opacity:0.75;">Wed – Sun</span>
-          <span class="card-sub" style="font-weight:500;opacity:0.75;">Closed Mon – Tue</span>
         </div>
         <a class="card" href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6" target="_blank" rel="noopener">
           <span class="card-label">Find Us</span>
@@ -506,6 +510,10 @@
           <a class="btn btn-maps" href="https://www.doordash.com/store/bombay-calling-seven-hills-46215272/111069347/" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
             Order on DoorDash
+          </a>
+          <a class="btn btn-maps" href="https://www.ubereats.com/au/store/bombay-calling-prospect-hwy/VK5wK0rlWg2br-UtEF44xA" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+            Order on Uber Eats
           </a>
           <a class="btn btn-maps" href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-5.686-8-12a8 8 0 1 1 16 0c0 6.314-8 12-8 12z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -580,6 +588,53 @@
           </div>
         </details>
 
+        <details class="specials-dropdown">
+          <summary>Brunch Menu</summary>
+          <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:center;margin:-6px 0 clamp(14px,2vh,20px);">Available Saturday and Sunday, 10:00AM to 1:00PM</p>
+          <div class="specials-items">
+            <div class="menu-item">
+              <span class="menu-item-name">Vada Pav (The Bombay)</span>
+              <p class="menu-item-desc">A golden fried potato patty tucked in a soft pav, layered with chutneys and a kick of spice.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Aloo Paratha</span>
+              <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced mashed potato, served with chutney.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Paneer Paratha</span>
+              <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced crumbled paneer, served with chutney.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Chole Kulche</span>
+              <p class="menu-item-desc">Soft, fluffy kulche served with a bold and spiced chickpea curry.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Mini Sabudana Tikki (4pc)</span>
+              <p class="menu-item-desc">Crispy little sabudana patties with a soft centre, light, flavourful and perfectly spiced.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Samosa (2pc)</span>
+              <p class="menu-item-desc">Golden, crispy pastry filled with spiced potato and peas, served with chutneys.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Brownies</span>
+              <p class="menu-item-desc">Homemade and eggless, rich and fudgy brownies baked fresh.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Loaded Brownies</span>
+              <p class="menu-item-desc">Homemade and eggless brownies loaded with indulgent toppings. Choose from Pistachio or Nutella.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Gulab Jamun (2pc)</span>
+              <p class="menu-item-desc">Soft, melt in your mouth golden dumplings soaked in a warm rose flavoured sugar syrup.</p>
+            </div>
+            <div class="menu-item">
+              <span class="menu-item-name">Chai</span>
+              <p class="menu-item-desc">A warming blend of bold tea, fresh ginger and aromatic spices, brewed the desi way.</p>
+            </div>
+          </div>
+        </details>
+
         <div class="menu-grid">
 
           <!-- Left: Vada Pav + Pav Bhaji + Dabeli + Frankie -->
@@ -643,7 +698,7 @@
 
           </div>
 
-          <!-- Right: Chaat Corner + For the Little Ones + Drinks + Combos -->
+          <!-- Right: Chaat Corner + Loaded Fries + For the Little Ones + Drinks -->
           <div class="menu-col">
 
             <div class="menu-category">
@@ -651,10 +706,6 @@
               <div class="menu-item">
                 <span class="menu-item-name">Flavour Bombs</span>
                 <p class="menu-item-desc">Crispy hollow puris filled with spiced potato and chickpeas, dunked in tangy tamarind and mint water, one burst at a time.</p>
-              </div>
-              <div class="menu-item">
-                <span class="menu-item-name">Chana Masala Chaat</span>
-                <p class="menu-item-desc">Spiced chickpeas tossed with crispy papdi, tangy tamarind chutney, fresh coriander and a squeeze of lemon, a bold and zesty street food classic.</p>
               </div>
               <div class="menu-item">
                 <span class="menu-item-name">Dahi Puri</span>
@@ -671,6 +722,26 @@
               <div class="menu-item">
                 <span class="menu-item-name">Sev Puri</span>
                 <p class="menu-item-desc">Crispy puris topped with spiced potato, onions, chutneys and a generous handful of sev, a satisfying bite of sweet, spicy and tangy all at once.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Loaded Fries</h3>
+              <div class="menu-item">
+                <span class="menu-item-name">Chaat Loaded Fries</span>
+                <p class="menu-item-desc">Masala fries topped with onions, garlic chutney, sweet chutney, green coriander chutney, yoghurt and chaat masala.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Vada Pav Loaded Fries</span>
+                <p class="menu-item-desc">Masala fries topped with melted cheese, vada pav dry chutney, sweet chutney, green coriander chutney and pieces of vada with a fresh green chilli on top.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Masala Cheesy Fries</span>
+                <p class="menu-item-desc">Crispy masala fries topped with a generous layer of melted cheese.</p>
+              </div>
+              <div class="menu-item">
+                <span class="menu-item-name">Kids Cheesy Fries</span>
+                <p class="menu-item-desc">Crispy fries topped with melted cheese, perfect for the little ones.</p>
               </div>
             </div>
 
