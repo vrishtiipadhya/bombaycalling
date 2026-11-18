@@ -118,11 +118,12 @@
 
     /* ── CARDS ── */
     .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
       gap: 12px;
       width: 100%;
+      max-width: 900px;
     }
 
     .card {
@@ -135,7 +136,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      min-width: 155px;
+      min-width: 0;
       box-shadow: 0 2px 18px rgba(44,24,16,0.06), 0 1px 4px rgba(44,24,16,0.03);
       backdrop-filter: blur(8px);
       transition: transform 200ms ease, box-shadow 200ms ease;
@@ -148,12 +149,12 @@
 
     .card-label {
       font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 10px;
+      font-weight: 500;
+      font-size: 11px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--maroon);
-      opacity: 0.65;
+      opacity: 1;
     }
 
     .card-value {
@@ -163,6 +164,30 @@
       color: var(--maroon);
       text-align: center;
       line-height: 1.3;
+    }
+
+    .hours-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      width: 100%;
+      max-width: 260px;
+    }
+    .hours-day {
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--maroon);
+      opacity: 0.75;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .hours-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.2vw, 19px);
+      color: var(--maroon);
+      white-space: nowrap;
     }
 
     .card-sub {
@@ -261,6 +286,16 @@
       margin: 0 0 clamp(32px, 5vh, 56px);
     }
 
+    .menu-heading.menu-subheading {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(17px, 2.6vw, 24px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin: 0 0 clamp(24px, 4vh, 44px);
+    }
+
     .menu-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -274,7 +309,15 @@
       flex-direction: column;
       margin-top: clamp(28px, 4vh, 40px);
       padding-top: clamp(20px, 3vh, 28px);
-      border-top: 1px solid rgba(44,24,16,0.2);
+    }
+    .menu-category::before {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 1px;
+      margin: 0 auto clamp(20px, 3vh, 28px);
+      margin-top: calc(-1 * clamp(20px, 3vh, 28px));
+      background: rgba(44,24,16,0.2);
     }
     .menu-col > .menu-category:first-child { margin-top: 0; }
 
@@ -307,7 +350,21 @@
       line-height: 1.2;
     }
 
-    .menu-item-price { display: none; }
+    .menu-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .menu-item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.6vw, 23px);
+      font-weight: 400;
+      color: var(--maroon);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
 
     .menu-item-desc {
       font-family: 'Jost', sans-serif;
@@ -344,6 +401,17 @@
       gap: 10px;
       user-select: none;
     }
+    .specials-title {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(17px, 2.6vw, 24px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--maroon);
+      text-align: center;
+      padding: clamp(14px, 2.2vh, 20px) 0;
+      margin: 0;
+    }
     .specials-dropdown summary::-webkit-details-marker { display: none; }
     .specials-dropdown summary::after {
       content: '';
@@ -371,6 +439,7 @@
 
     @media (max-width: 640px) {
       .specials-items { grid-template-columns: 1fr; }
+      .specials-items > .menu-col:first-child > .menu-item:last-child { border-bottom: 1px solid rgba(44,24,16,0.06); }
     }
 
     /* ── FADE-UP (Intersection Observer) ── */
@@ -426,8 +495,11 @@
     .footer-icon:hover { border-color: rgba(250,245,240,0.6); color: var(--cream); }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .cards { grid-template-columns: 1fr; max-width: 420px; }
+    }
+
     @media (max-width: 640px) {
-      .cards { flex-direction: column; align-items: stretch; }
       .card  { padding: 16px 18px; min-width: unset; }
       .menu-grid { grid-template-columns: 1fr; }
     }
@@ -483,16 +555,18 @@
       <div class="cards fade-up">
         <div class="card">
           <span class="card-label">Hours</span>
-          <span class="card-label" style="margin-top:4px;font-size:13px;font-weight:500;opacity:1;">Brunch</span>
-          <span class="card-value">10:00AM – 1:00PM</span>
-          <span class="card-sub" style="font-weight:500;opacity:0.75;">Sat &amp; Sun</span>
+          <span class="card-label" style="margin-top:4px;font-size:13px;font-weight:500;opacity:1;">Lunch</span>
+          <span class="hours-line"><span class="hours-day">Sat &amp; Sun</span><span class="hours-time">11:00AM – 1:00PM</span></span>
           <span class="card-label" style="margin-top:10px;font-size:13px;font-weight:500;opacity:1;">Dinner</span>
-          <span class="card-value">5:30PM – 10:30PM</span>
-          <span class="card-sub" style="font-weight:500;opacity:0.75;">Wed – Sun</span>
+          <span class="hours-line"><span class="hours-day">Wed &amp; Thu</span><span class="hours-time">6:00PM – 11:00PM</span></span>
+          <span class="hours-line"><span class="hours-day">Fri &amp; Sat</span><span class="hours-time">6:00PM – 11:30PM</span></span>
+          <span class="hours-line"><span class="hours-day">Sun</span><span class="hours-time">6:00PM – 11:00PM</span></span>
+          <span class="card-sub" style="margin-top:8px;font-weight:500;opacity:0.75;">Closed Mon &amp; Tue</span>
         </div>
         <a class="card" href="https://maps.app.goo.gl/8CTrGx2NeMGD4XZy6" target="_blank" rel="noopener">
           <span class="card-label">Find Us</span>
           <span class="card-value">231 Prospect Hwy<br>Seven Hills, NSW</span>
+          <span class="card-sub" style="font-weight:500;opacity:0.75;">Cnr of Redman Lane and Prospect Highway</span>
           <span class="card-sub" style="font-weight:500;opacity:0.75;">Opposite Seven Hills Plaza</span>
         </a>
         <a class="card" href="#menu">
@@ -567,95 +641,178 @@
         <h2 class="menu-heading">Menu</h2>
 
         <details class="specials-dropdown">
-          <summary>Combos</summary>
+          <summary>Lunch Menu</summary>
+          <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:center;margin:-6px 0 clamp(14px,2vh,20px);">Available Saturday and Sunday, 11:00AM to 1:00PM</p>
           <div class="specials-items">
-            <div class="menu-item">
-              <span class="menu-item-name">The Mumbai Combo</span>
-              <p class="menu-item-desc">The Bombay, Yummy Fries and a Mummy's Chai. The perfect introduction to Bombay Calling.</p>
+            <div class="menu-col">
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Lunch Deal</span>
+                  <span class="menu-item-price">$19.90</span>
+                </div>
+                <p class="menu-item-desc">1 Aloo Paratha served with yoghurt, 1 Chole Kulche and 1 Mango Lassi.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Aloo Paratha</span>
+                  <span class="menu-item-price">$11.90</span>
+                </div>
+                <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced mashed potato, served with chutney.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Paneer Paratha</span>
+                  <span class="menu-item-price">$12.90</span>
+                </div>
+                <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced crumbled paneer, served with chutney.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Chole Kulche</span>
+                  <span class="menu-item-price">$15.00</span>
+                </div>
+                <p class="menu-item-desc">Soft, fluffy kulche served with a bold and spiced chickpea curry.</p>
+              </div>
             </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Dabeli Combo</span>
-              <p class="menu-item-desc">The Bombay Slider, Yummy Fries and a Mummy's Chai. A sweet and spicy Mumbai classic with all the sides.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Bombay Classic Family Meal</span>
-              <p class="menu-item-desc">Choose 4x Vada Pav or Dabeli (standard only), 1x Papdi Chaat or Dahi Puri to share, 1x Cheesy Pav or Yummy Fries and 4x Mummy's Chai. Feeds a family of 4. Extra charges apply for Cheesy, Butter or Loaded varieties.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">The Grand Bombay Family Meal</span>
-              <p class="menu-item-desc">Choose 2x Vada Pav or Dabeli (standard only), 1x Bombay Mash or Cheesy Bombay Mash, 1x Frankie (Bombay Street Style or Paneer Chilli), 1x Papdi Chaat or Dahi Puri to share, 1x Cheesy Pav or Yummy Fries and 4x Mummy's Chai. Feeds a family of 4. Extra charges apply for Cheesy, Butter or Loaded varieties.</p>
+            <div class="menu-col">
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Vada Pav (The Bombay)</span>
+                  <span class="menu-item-price">$7.90</span>
+                </div>
+                <p class="menu-item-desc">A golden fried potato patty tucked in a soft pav, layered with chutneys and a kick of spice.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Mini Sabudana Tikki (4pc)</span>
+                  <span class="menu-item-price">$5.00</span>
+                </div>
+                <p class="menu-item-desc">Crispy little sabudana patties with a soft centre, light, flavourful and perfectly spiced.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Samosa (2pc)</span>
+                  <span class="menu-item-price">$7.50</span>
+                </div>
+                <p class="menu-item-desc">Golden, crispy pastry filled with spiced potato and peas, served with chutneys.</p>
+              </div>
             </div>
           </div>
         </details>
 
-        <details class="specials-dropdown">
-          <summary>Brunch Menu</summary>
-          <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:center;margin:-6px 0 clamp(14px,2vh,20px);">Available Saturday and Sunday, 10:00AM to 1:00PM</p>
+        <div class="specials-dropdown">
+          <h3 class="specials-title">Combos</h3>
           <div class="specials-items">
             <div class="menu-item">
-              <span class="menu-item-name">Vada Pav (The Bombay)</span>
-              <p class="menu-item-desc">A golden fried potato patty tucked in a soft pav, layered with chutneys and a kick of spice.</p>
+              <div class="menu-item-row">
+                <span class="menu-item-name">The Mumbai Combo</span>
+                <span class="menu-item-price">$15.00</span>
+              </div>
+              <p class="menu-item-desc">The Bombay, Kids Fries and a Mummy's Chai. The perfect introduction to Bombay Calling.</p>
             </div>
             <div class="menu-item">
-              <span class="menu-item-name">Aloo Paratha</span>
-              <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced mashed potato, served with chutney.</p>
+              <div class="menu-item-row">
+                <span class="menu-item-name">Dabeli Combo</span>
+                <span class="menu-item-price">$15.00</span>
+              </div>
+              <p class="menu-item-desc">The Bombay Slider, Kids Fries and a Mummy's Chai. A sweet and spicy Mumbai classic with all the sides.</p>
             </div>
             <div class="menu-item">
-              <span class="menu-item-name">Paneer Paratha</span>
-              <p class="menu-item-desc">Soft, golden whole wheat flatbread stuffed with spiced crumbled paneer, served with chutney.</p>
+              <div class="menu-item-row">
+                <span class="menu-item-name">Bombay Duo</span>
+                <span class="menu-item-price">$19.80</span>
+              </div>
+              <p class="menu-item-desc">A Vada Pav, a Dabeli and 2 drinks.</p>
             </div>
             <div class="menu-item">
-              <span class="menu-item-name">Chole Kulche</span>
-              <p class="menu-item-desc">Soft, fluffy kulche served with a bold and spiced chickpea curry.</p>
+              <div class="menu-item-row">
+                <span class="menu-item-name">Bombay Classic Family Meal</span>
+                <span class="menu-item-price">$56.00</span>
+              </div>
+              <p class="menu-item-desc">Choose 4x Vada Pav or Dabeli (standard only), 1x Papdi Chaat or Dahi Puri to share, 1x Cheesy Pav or Kids Fries and 4x Mummy's Chai. Feeds a family of 4. Extra charges apply for Cheesy, Butter or Loaded varieties.</p>
             </div>
             <div class="menu-item">
-              <span class="menu-item-name">Mini Sabudana Tikki (4pc)</span>
-              <p class="menu-item-desc">Crispy little sabudana patties with a soft centre, light, flavourful and perfectly spiced.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Samosa (2pc)</span>
-              <p class="menu-item-desc">Golden, crispy pastry filled with spiced potato and peas, served with chutneys.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Brownies</span>
-              <p class="menu-item-desc">Homemade and eggless, rich and fudgy brownies baked fresh.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Loaded Brownies</span>
-              <p class="menu-item-desc">Homemade and eggless brownies loaded with indulgent toppings. Choose from Pistachio or Nutella.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Gulab Jamun (2pc)</span>
-              <p class="menu-item-desc">Soft, melt in your mouth golden dumplings soaked in a warm rose flavoured sugar syrup.</p>
-            </div>
-            <div class="menu-item">
-              <span class="menu-item-name">Chai</span>
-              <p class="menu-item-desc">A warming blend of bold tea, fresh ginger and aromatic spices, brewed the desi way.</p>
+              <div class="menu-item-row">
+                <span class="menu-item-name">The Grand Bombay Family Meal</span>
+                <span class="menu-item-price">$67.00</span>
+              </div>
+              <p class="menu-item-desc">Choose 2x Vada Pav or Dabeli (standard only), 1x Bombay Mash or Cheesy Bombay Mash, 1x Frankie (Bombay Classic or Paneer Chilli), 1x Papdi Chaat or Dahi Puri to share, 1x Cheesy Pav or Kids Fries and 4x Mummy's Chai. Feeds a family of 4. Extra charges apply for Cheesy, Butter or Loaded varieties.</p>
             </div>
           </div>
-        </details>
+        </div>
+
+        <div class="specials-dropdown">
+          <h3 class="specials-title">Bombay Sandwiches</h3>
+          <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);text-align:center;margin:-6px 0 clamp(14px,2vh,20px);">Available Dinner Wednesday – Sunday, Lunch Saturday – Sunday</p>
+          <div class="specials-items">
+            <div class="menu-item">
+              <div class="menu-item-row">
+                <span class="menu-item-name">Bombay Sada Sandwich</span>
+                <span class="menu-item-price">$9.90</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-row">
+                <span class="menu-item-name">Bombay Veg Grill Sandwich</span>
+                <span class="menu-item-price">$14.50</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-row">
+                <span class="menu-item-name">Bombay Veg Cheese Grill Sandwich</span>
+                <span class="menu-item-price">$15.50</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-row">
+                <span class="menu-item-name">Masala Toast Sandwich</span>
+                <span class="menu-item-price">$12.90</span>
+              </div>
+            </div>
+            <div class="menu-item">
+              <div class="menu-item-row">
+                <span class="menu-item-name">Kids Cheese Sandwich</span>
+                <span class="menu-item-price">$7.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="menu-heading menu-subheading">Dinner Menu</h2>
 
         <div class="menu-grid">
 
-          <!-- Left: Vada Pav + Pav Bhaji + Dabeli + Frankie -->
+          <!-- Left: Vada Pav + Pav Bhaji + Dabeli + Frankie + Fries -->
           <div class="menu-col">
 
             <div class="menu-category">
               <h3 class="menu-cat-title">Vada Pav</h3>
               <div class="menu-item">
-                <span class="menu-item-name">The Bombay</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">The Bombay</span>
+                  <span class="menu-item-price">$7.90</span>
+                </div>
                 <p class="menu-item-desc">A golden fried potato patty tucked in a soft pav, layered with chutneys and a kick of spice.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">The Cheesy Bombay</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">The Cheesy Bombay</span>
+                  <span class="menu-item-price">$8.90</span>
+                </div>
                 <p class="menu-item-desc">All the classics, elevated with a generous melt of cheese over the vada.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Butter Mar Ke</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Butter Mar Ke</span>
+                  <span class="menu-item-price">$8.40</span>
+                </div>
                 <p class="menu-item-desc">Soft pav toasted in rich butter, cradling a crispy spiced vada and fresh chutneys.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Loaded Bombay</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Loaded Bombay</span>
+                  <span class="menu-item-price">$9.50</span>
+                </div>
                 <p class="menu-item-desc">Buttery toasted pav, golden vada, melted cheese, the ultimate indulgence.</p>
               </div>
             </div>
@@ -663,11 +820,17 @@
             <div class="menu-category">
               <h3 class="menu-cat-title">Pav Bhaji</h3>
               <div class="menu-item">
-                <span class="menu-item-name">Bombay Mash</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Bombay Mash</span>
+                  <span class="menu-item-price">$16.90</span>
+                </div>
                 <p class="menu-item-desc">A thick, spiced vegetable mash served piping hot with soft buttered pavs.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Cheesy Bombay Mash</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Cheesy Bombay Mash</span>
+                  <span class="menu-item-price">$17.90</span>
+                </div>
                 <p class="menu-item-desc">Our classic pav bhaji crowned with a generous layer of melted cheese.</p>
               </div>
             </div>
@@ -675,11 +838,17 @@
             <div class="menu-category">
               <h3 class="menu-cat-title">Dabeli</h3>
               <div class="menu-item">
-                <span class="menu-item-name">The Bombay Slider</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">The Bombay Slider</span>
+                  <span class="menu-item-price">$7.90</span>
+                </div>
                 <p class="menu-item-desc">A sweet and spicy Mumbai street classic, stuffed with spiced potato filling, pomegranate, and chutneys in a soft pav.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Bombay Melt</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Bombay Melt</span>
+                  <span class="menu-item-price">$8.90</span>
+                </div>
                 <p class="menu-item-desc">All the bold flavours of our classic dabeli, crowned with a generous layer of melted cheese.</p>
               </div>
             </div>
@@ -687,81 +856,200 @@
             <div class="menu-category">
               <h3 class="menu-cat-title">Frankie</h3>
               <div class="menu-item">
-                <span class="menu-item-name">Paneer Chilli Frankie</span>
-                <p class="menu-item-desc">Tender paneer and crisp capsicum tossed in a bold chilli sauce, wrapped in a soft buttered roti with onions and chutneys.</p>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Bombay Classic Frankie</span>
+                  <span class="menu-item-price">$13.50</span>
+                </div>
+                <p class="menu-item-desc">A classic Bombay frankie packed with spiced filling, fresh onions and tangy chutneys, all wrapped up in a soft toasted roti.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Bombay Street Style Frankie</span>
-                <p class="menu-item-desc">A classic Bombay frankie packed with spiced filling, fresh onions and tangy chutneys, all wrapped up in a soft toasted roti.</p>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Paneer Chilli Frankie</span>
+                  <span class="menu-item-price">$15.50</span>
+                </div>
+                <p class="menu-item-desc">Tender paneer and crisp capsicum tossed in a bold chilli sauce, wrapped in a soft buttered roti with onions and chutneys.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Fries</h3>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Masala Fries</span>
+                  <span class="menu-item-price">$5.00</span>
+                </div>
+                <p class="menu-item-desc">Crispy golden fries tossed in a bold blend of Indian spices.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Chaat Loaded Fries</span>
+                  <span class="menu-item-price">$13.50</span>
+                </div>
+                <p class="menu-item-desc">Masala fries topped with onions, garlic chutney, sweet chutney, green coriander chutney, yoghurt and chaat masala.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Vada Loaded Fries</span>
+                  <span class="menu-item-price">$14.90</span>
+                </div>
+                <p class="menu-item-desc">Masala fries topped with melted cheese, vada pav dry chutney, sweet chutney, green coriander chutney and pieces of vada with a fresh green chilli on top.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Masala Cheesy Fries</span>
+                  <span class="menu-item-price">$9.50</span>
+                </div>
+                <p class="menu-item-desc">Crispy masala fries topped with a generous layer of melted cheese.</p>
               </div>
             </div>
 
           </div>
 
-          <!-- Right: Chaat Corner + Loaded Fries + For the Little Ones + Drinks -->
+          <!-- Right: Chaat Corner + For the Little Ones + Dessert + Drinks -->
           <div class="menu-col">
 
             <div class="menu-category">
               <h3 class="menu-cat-title">Chaat Corner</h3>
               <div class="menu-item">
-                <span class="menu-item-name">Flavour Bombs</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Pani Puri</span>
+                  <span class="menu-item-price">$8.00</span>
+                </div>
                 <p class="menu-item-desc">Crispy hollow puris filled with spiced potato and chickpeas, dunked in tangy tamarind and mint water, one burst at a time.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Dahi Puri</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Dahi Puri</span>
+                  <span class="menu-item-price">$11.50</span>
+                </div>
                 <p class="menu-item-desc">Crispy puris filled with spiced potato, topped with creamy yoghurt, sweet tamarind chutney and a sprinkle of chaat masala, cool, tangy and utterly addictive.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Papdi Chaat</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Papdi Chaat</span>
+                  <span class="menu-item-price">$11.50</span>
+                </div>
                 <p class="menu-item-desc">Crispy fried dough wafers layered with yoghurt, tangy tamarind chutney, fresh coriander and a sprinkle of chaat masala, sweet, sour and spicy in every bite.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Bhel Puri</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Sev Puri</span>
+                  <span class="menu-item-price">$9.90</span>
+                </div>
+                <p class="menu-item-desc">Crispy puris topped with spiced potato, onions, chutneys and a generous handful of sev, a satisfying bite of sweet, spicy and tangy all at once.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Bhel Puri</span>
+                  <span class="menu-item-price">$9.90</span>
+                </div>
                 <p class="menu-item-desc">A light and tangy mix of puffed rice, sev, onions, tomatoes and chutneys, tossed fresh and served crunchy.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Sev Puri</span>
-                <p class="menu-item-desc">Crispy puris topped with spiced potato, onions, chutneys and a generous handful of sev, a satisfying bite of sweet, spicy and tangy all at once.</p>
-              </div>
-            </div>
-
-            <div class="menu-category">
-              <h3 class="menu-cat-title">Loaded Fries</h3>
-              <div class="menu-item">
-                <span class="menu-item-name">Chaat Loaded Fries</span>
-                <p class="menu-item-desc">Masala fries topped with onions, garlic chutney, sweet chutney, green coriander chutney, yoghurt and chaat masala.</p>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Samosa Chaat</span>
+                  <span class="menu-item-price">$12.00</span>
+                </div>
+                <p class="menu-item-desc">Crushed samosa topped with spiced chickpeas, onions, yoghurt, tangy chutneys and crunchy sev.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Vada Pav Loaded Fries</span>
-                <p class="menu-item-desc">Masala fries topped with melted cheese, vada pav dry chutney, sweet chutney, green coriander chutney and pieces of vada with a fresh green chilli on top.</p>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Aloo Tikki Chaat</span>
+                  <span class="menu-item-price">$12.00</span>
+                </div>
+                <p class="menu-item-desc">Golden spiced potato patties topped with yoghurt, chutneys and chaat masala.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Masala Cheesy Fries</span>
-                <p class="menu-item-desc">Crispy masala fries topped with a generous layer of melted cheese.</p>
-              </div>
-              <div class="menu-item">
-                <span class="menu-item-name">Kids Cheesy Fries</span>
-                <p class="menu-item-desc">Crispy fries topped with melted cheese, perfect for the little ones.</p>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Sukha Masala Puri Plate</span>
+                  <span class="menu-item-price">$9.90</span>
+                </div>
+                <p class="menu-item-desc">Crispy hollow puris filled with spiced potato and chickpea mix, topped with chaat masala and crunchy sev.</p>
               </div>
             </div>
 
             <div class="menu-category">
               <h3 class="menu-cat-title">For the Little Ones</h3>
               <div class="menu-item">
-                <span class="menu-item-name">Cheesy Pav</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Kids Cheesy Fries</span>
+                  <span class="menu-item-price">$7.50</span>
+                </div>
+                <p class="menu-item-desc">Crispy golden fries topped with melted cheese, perfect for the little ones.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Cheesy Pav (2pc)</span>
+                  <span class="menu-item-price">$4.50</span>
+                </div>
                 <p class="menu-item-desc">Warm buttered pav with melted cheese.</p>
               </div>
               <div class="menu-item">
-                <span class="menu-item-name">Yummy Fries</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Kids Fries</span>
+                  <span class="menu-item-price">$5.00</span>
+                </div>
                 <p class="menu-item-desc">Crispy golden fries with seasoning.</p>
+              </div>
+            </div>
+
+            <div class="menu-category">
+              <h3 class="menu-cat-title">Dessert</h3>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Brownies</span>
+                  <span class="menu-item-price">$5.00</span>
+                </div>
+                <p class="menu-item-desc">Homemade and eggless, rich and fudgy brownies baked fresh.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Gulaab Jamun</span>
+                  <span class="menu-item-price">$5.00</span>
+                </div>
+                <p class="menu-item-desc">Soft, melt in your mouth golden dumplings soaked in a warm rose flavoured sugar syrup.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Brownie with Icecream</span>
+                  <span class="menu-item-price">$9.50</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Gulaab Jamun with Icecream</span>
+                  <span class="menu-item-price">$9.50</span>
+                </div>
               </div>
             </div>
 
             <div class="menu-category">
               <h3 class="menu-cat-title">Drinks</h3>
               <div class="menu-item">
-                <span class="menu-item-name">Mummy's Chai</span>
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Mummy's Chai</span>
+                  <span class="menu-item-price">$4.00</span>
+                </div>
                 <p class="menu-item-desc">A warming blend of bold tea, fresh ginger, and aromatic spices, brewed the desi way.</p>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Soft Drink</span>
+                  <span class="menu-item-price">$3.00</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Water</span>
+                  <span class="menu-item-price">$3.00</span>
+                </div>
+              </div>
+              <div class="menu-item">
+                <div class="menu-item-row">
+                  <span class="menu-item-name">Mango Lassi</span>
+                  <span class="menu-item-price">$6.00</span>
+                </div>
+                <p class="menu-item-desc">A cool, creamy mango yoghurt drink.</p>
               </div>
             </div>
 
